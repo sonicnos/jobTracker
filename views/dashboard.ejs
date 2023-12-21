@@ -1,0 +1,148 @@
+<%- include('partials/header') -%>
+<section class="dashboard">
+  <div class="container">
+    <h1>Dashboard</h1>
+    <p class="create-job"><a href="/offer">Create new job</a></p>
+
+    <div class="filters">
+      <form class="filter-form" action="/dashboard" method="post">
+        <p>Filter by :</p>
+        <div class="filter">
+          <label for="status">Status</label>
+          <select name="status" id="status">
+            <option value="All">All</option>
+            <option value="Negative">Negative</option>
+            <option value="Interested">Interested</option>
+            <option value="Interview">Interview</option>
+            <option value="Cv sent">Cv sent</option>
+          </select>
+        </div>
+        <div class="filter">
+          <label for="origin">Origin</label>
+          <select name="origin" id="origin">
+            <option value="All">All</option>
+            <option value="Unsolicited application">
+              Unsolicited application
+            </option>
+            <option value="Job offer">Job offer</option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <div class="offers">
+      <% if (offers.length === 0) { %>
+      <p>No offers</p>
+      <% } else { %> <% offers.forEach(function(offer) { %>
+      <div class="offer" id="<%= offer._id %>">
+        <h2><%= offer.title %></h2>
+        <p class="status"><%= offer.status %></p>
+        <p><%= offer.company %></p>
+        <p class="origin"><%= offer.origin %></p>
+        <div class="options">
+          <p>
+            <a href="/offer/<%= offer._id %>"
+              ><i class="fa-solid fa-eye fa-2xl" style="color: #000000"></i
+            ></a>
+          </p>
+          <p>
+            <a href="/offer/update/<%= offer._id %>"
+              ><i
+                class="fa-solid fa-pen-to-square fa-2xl"
+                style="color: #000000"
+              ></i
+            ></a>
+          </p>
+          <form class="delete-form" action="/offer/:id" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit">
+              <i class="fa-solid fa-trash fa-2xl" style="color: #000000"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <% }) %> <% } %>
+    </div>
+  </div>
+</section>
+
+<script>
+  const status = document.querySelectorAll(".status");
+  status.forEach((status) => {
+    if (status.innerText === "Negative") {
+      status.style.background = "#AE1818";
+    } else if (status.innerText === "Interested") {
+      status.style.background = "#e0d823";
+    } else if (status.innerText === "Interview") {
+      status.style.background = "#5AAE18";
+    } else if (status.innerText === "Cv sent") {
+      status.style.background = "#186FAE";
+    }
+  });
+
+  const filterStatus = document.querySelector("#status");
+  const filterOrigin = document.querySelector("#origin");
+  const filterForm = document.querySelector(".filter-form");
+  const offers = document.querySelectorAll(".offer");
+
+  filterForm.addEventListener("change", (e) => {
+    e.preventDefault();
+    offers.forEach((offer) => {
+      if (filterStatus.value === "All" && filterOrigin.value === "All") {
+        offer.style.display = "inline-block";
+      } else if (filterStatus.value === "All" && filterOrigin.value !== "All") {
+        if (offer.querySelector(".origin").innerText === filterOrigin.value) {
+          offer.style.display = "inline-block";
+        } else {
+          offer.style.display = "none";
+        }
+      } else if (filterStatus.value !== "All" && filterOrigin.value === "All") {
+        if (offer.querySelector(".status").innerText === filterStatus.value) {
+          offer.style.display = "inline-block";
+        } else {
+          offer.style.display = "none";
+        }
+      } else if (filterStatus.value !== "All" && filterOrigin.value !== "All") {
+        if (
+          offer.querySelector(".status").innerText === filterStatus.value &&
+          offer.querySelector(".origin").innerText === filterOrigin.value
+        ) {
+          offer.style.display = "inline-block";
+        } else {
+          offer.style.display = "none";
+        }
+      }
+    });
+  });
+
+  const deleteForm = document.querySelectorAll(".delete-form");
+  console.log(deleteForm);
+  
+  deleteForm.forEach((deleteForm) => {
+    deleteForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const id = deleteForm.parentElement.parentElement.getAttribute("id");
+    console.log("id :", id);
+    const confirmDelete = confirm(
+      "Are you sure you want to delete this offer ?"
+    );
+    if (confirmDelete) {
+      try {
+        const res = await fetch(`/offer/${id}`, {
+          method: "DELETE",
+        });
+        const data = await res.json();
+        console.log("data :", data);
+        if (data.status === "success") {
+          window.location.href = "/dashboard";
+        }
+
+      } catch (err) {
+        console.log("error with the fetch", err);
+      }
+    }
+
+  });
+  })
+  
+</script>

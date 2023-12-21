@@ -1,0 +1,50 @@
+.form-section{
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    h1{
+        text-align: center;
+    }
+    form{
+        max-width: 300px;
+        margin-top: 20px;
+        .name{
+            display: flex;
+            gap: 10px;
+        }
+        .picture-cv{
+            input[type="file"] {
+                background-color: $secondary-color;
+                &::-webkit-file-upload-button {
+                    display: none;
+                }
+                &::file-selector-button {
+                    display: none;
+                }
+            }
+            display: flex;
+            gap: 10px;
+            .picture-controller, .cv-controller{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+        input{
+            width: 100%;
+            padding: 5px;
+            margin: 10px 0 0 0;
+            border: 1px solid black;
+            outline: none;
+            background-color: $primary-color;
+        }
+        
+        }
+        .error{
+            color: red;
+            font-size: small;
+        }
+    }
+
+    

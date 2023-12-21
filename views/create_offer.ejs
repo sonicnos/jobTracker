@@ -1,0 +1,150 @@
+<%- include('partials/header') -%>
+<section class="form-section">
+    <div class="container">
+        <h1>Create job</h1>
+        <form action="/offer" method="post">
+            <div class="title-controller">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title">
+                <p class="title error"></p>
+            </div>
+            <div class="website-controller">
+                <label for="website">Website</label>
+                <input type="text" name="website" id="website">
+                <p class="website error"></p>
+            </div>
+            <div class="company-controller">
+                <label for="company">Company</label>
+                <input type="text" name="company" id="company">
+                <p class="company error"></p>
+            </div>
+            <h2>Employer's contact</h2>
+            <div class="name-controller">
+                <label for="contactName">Name</label>
+                <input type="text" name="contact.name" id="contactName">
+                <p class="contactName error"></p>
+            </div>
+            <div class="email-controller">
+                <label for="contactEmail">Email of contact</label>
+                <input type="text" name="contact.email" id="contactEmail">
+                <p class="contactEmail error"></p>
+            </div>
+            <div class="phone-controller">
+                <label for="contactPhone">Phone</label>
+                <input type="text" name="contact.phone" id="contactPhone">
+                <p class="contactPhone error"></p>
+            </div>
+            <div class="adress-controller">
+                <label for="contactAdress">Adress</label>
+                <input type="text" id="contactAdress" name="contact.adress">
+                <p class="contactAdress error"></p>
+            </div>
+            <div class="origin-controller">
+                <label for="origin">Origin</label>
+                <select name="origin" id="origin">
+                    <option value="Unsolicited application">Unsolicited application</option>
+                    <option value="Job offer">Job offer</option>
+                </select>
+                <p class="origin error"></p>
+            </div>
+            <div class="status-controller">
+                <label for="status">Status</label>
+                <select name="status" id="status">
+                    <option value="Interested">Interested</option>
+                    <option value="CV sent">CV sent</option>
+                    <option value="Negative">Negative</option>
+                    <option value="Interview">Interview</option>
+                </select>
+                <p class="status error"></p>
+            </div>
+            <div class="comments-controller">
+                <label for="comments">Comments</label>
+                <textarea name="comments" id="comments" cols="38" rows="5"></textarea>
+                <p class="comments error"></p>
+            </div>
+            <button class="btn" type="submit">Create</button>
+        </form>
+    </div>
+</section>
+
+<script>
+    const form = document.querySelector('form');
+    const title = document.querySelector('#title');
+    const website = document.querySelector('#website');
+    const company = document.querySelector('#company');
+    const contactName = document.querySelector('#contactName');
+    const contactEmail = document.querySelector('#contactEmail');
+    const contactPhone = document.querySelector('#contactPhone');
+    const contactAdress = document.querySelector('#contactAdress');
+    const origin = document.querySelector('#origin');
+    const status = document.querySelector('#status');
+    const comments = document.querySelector('#comments');
+    const titleError = document.querySelector('.title.error');
+    const websiteError = document.querySelector('.website.error');
+    const companyError = document.querySelector('.company.error');
+    const contactNameError = document.querySelector('.contactName.error');
+    const contactEmailError = document.querySelector('.contactEmail.error');
+    const contactPhoneError = document.querySelector('.contactPhone.error');
+    const contactAdressError = document.querySelector('.contactAdress.error');
+    const originError = document.querySelector('.origin.error');
+    const statusError = document.querySelector('.status.error');
+    const commentsError = document.querySelector('.comments.error');
+    
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        titleError.textContent = '';
+        websiteError.textContent = '';
+        companyError.textContent = '';
+        contactNameError.textContent = '';
+        contactEmailError.textContent = '';
+        contactPhoneError.textContent = '';
+        contactAdressError.textContent = '';
+        originError.textContent = '';
+        statusError.textContent = '';
+        commentsError.textContent = '';
+        try {
+            const res = await fetch('/offer', {
+                method: 'POST',
+                body: JSON.stringify({
+                    title: title.value,
+                    website: website.value,
+                    company: company.value,
+                    contact: {
+                        name: contactName.value,
+                        email: contactEmail.value,
+                        phone: contactPhone.value,
+                        adress: contactAdress.value
+                    },
+                    origin: origin.value,
+                    status: status.value,
+                    comments: comments.value
+                }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await res.json();
+            console.log("data : ", data);
+            if (data.errors) {
+                titleError.textContent = data.errors.title;
+                websiteError.textContent = data.errors.website;
+                companyError.textContent = data.errors.company;
+                contactNameError.textContent = data.errors.contact.name;
+                contactEmailError.textContent = data.errors.contact.email;
+                contactPhoneError.textContent = data.errors.contact.phone;
+                contactAdressError.textContent = data.errors.contact.adress;
+                originError.textContent = data.errors.origin;
+                statusError.textContent = data.errors.status;
+                commentsError.textContent = data.errors.comments;       
+            }
+            if (data.offer) {
+                location.assign('/offer');
+            }
+        } catch (error) {
+
+            console.log("error with the fetch :", error);
+        }   
+    });
+
+</script>
+</body>

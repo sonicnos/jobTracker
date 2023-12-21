@@ -1,0 +1,40 @@
+.dashboard{
+    h1{
+        text-align: center;
+        margin: 20px;
+    }
+    .create-job{
+        text-align: center;
+    }
+
+    .container{
+        .offers{
+            margin-top: 30px ;
+        }
+        .offer{
+            background-color: white;
+            padding: 20px;
+            display: inline-block;
+            position: relative;
+            .status{
+                background-color: $btn-color;
+                color: white;
+                width: 120px;
+                text-align: center;
+                transform: translate(0, -50%);
+                position: absolute ;
+                top: 0;
+                right: 0;
+
+            }
+            .options{
+                margin-top: 30px;
+                display: flex;
+                justify-content: space-between;
+                i{
+                    width: 20px;
+                }
+            }
+        }
+    }
+}

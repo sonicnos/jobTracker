@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Tracker</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <script src="https://kit.fontawesome.com/b6b4569f0a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <span class="logo"><a href="/">LOGO</a></span>
+            <ul>
+                <% if (user) { %>
+                <li>Welcome, <%= user.firstName %></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout">Log out</a></li>
+                <% } else { %>
+                <li><a href="/login">Log in</a></li>
+                <li><a href="/register" class="btn">Register</a></li>
+                <% } %>
+              </ul>
+        </div>
+        
+    </header>

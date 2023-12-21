@@ -1,0 +1,22 @@
+.display-offer{
+    .container{
+        padding-top: 30px;
+        max-width: 400px;
+        h1{
+            text-align: center;
+        }
+        .about-offer, .about-contact, .about-status{
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            column-gap: 20px;
+            row-gap: 5px;
+            border-bottom: 3px solid black;
+            margin-top: 20px;
+            padding-bottom: 5px;
+        }
+        .btn{
+            display: inline-block;
+            text-align: center;
+        }
+    }
+}

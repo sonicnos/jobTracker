@@ -1,0 +1,137 @@
+<%- include('partials/header') -%>
+
+<section class="form-section">
+    <div class="container">
+        <form action="/register" method="post" enctype="multipart/form-data">
+            <h1>Register</h1>
+            <div class="name">
+                <div class="firstname-controller">
+                    <label for="firstName">Firstname</label>
+                    <input type="text" name="firstName" id="firstName">
+                    <p class="firstName error"></p>
+                </div>
+                <div class="lastname-controller">
+                    <label for="lastName">Lastname</label>
+                    <input type="text" name="lastName" id="lastName">
+                    <p class="lastName error"></p>
+                </div>
+            </div>
+            <div class="email-controller">
+                <label for="email">email</label>
+                <input type="text" name="email" id="email">
+                <p class="email error"></p>
+            </div>
+            <div class="picture-cv">
+
+                <div class="picture-controller">
+                    <label for="picture">Profile picture</label>
+                    <input type="file" name="profilePicture" id="picture">
+                    <p class="picture error"></p>
+                </div>
+                <div class="cv-controller">
+                    <label for="cv">cv</label>
+                    <input type="file" name="cv" id="cv">
+                    <p class="cv error"></p>
+                </div>
+
+
+            </div>
+
+            <div class="github-controller">
+                <label for="github">Github</label>
+                <input type="text" name="github" id="github">
+                <p class="github error"></p>
+            </div>
+
+            <div class="password-controller">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <p class="password error"></p>
+            </div>
+            <div class="repeat-password-controller">
+                <label for="repeat-password">Repeat password</label>
+                <input type="password" name="repeat-password" id="repeat-password">
+                <p class="repeat-password error"></p>
+            </div>
+
+            <button class="btn" type="submit">Register</button>
+
+        </form>
+
+        <p >Already registered ? <a href="/login">Login</a></p>
+    </div>
+</section>
+
+
+    <script>
+        const form = document.querySelector('form');
+        const firstName = document.querySelector('#firstName');
+        const firstNameError = document.querySelector('.firstName.error');
+        const lastName = document.querySelector('#lastName');
+        const lastNameError = document.querySelector('.lastName.error');
+        const email = document.querySelector('#email');
+        const emailError = document.querySelector('.email.error');
+        const picture = document.querySelector('#picture');
+        const pictureError = document.querySelector('.picture.error');
+        const cv = document.querySelector('#cv');
+        const cvError = document.querySelector('.cv.error');
+        const password = document.querySelector('#password');
+        const passwordError = document.querySelector('.password.error');
+        const repeatPassword = document.querySelector('#repeat-password');
+        const repeatPasswordError = document.querySelector('.repeat-password.error');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const firstNameValue = firstName.value;
+            const lastNameValue = lastName.value;
+            const emailValue = email.value;
+            const pictureValue = picture.value;
+            const cvValue = cv.value;
+            const passwordValue = password.value;
+            const repeatPasswordValue = repeatPassword.value;
+
+            //reset all errors
+            firstNameError.textContent = '';
+            lastNameError.textContent = '';
+            emailError.textContent = '';
+            pictureError.textContent = '';
+            cvError.textContent = '';
+            passwordError.textContent = '';
+            repeatPasswordError.textContent = '';
+
+            
+
+
+            try {
+                const formData = new FormData(form);
+                console.log("form data :", formData);
+                const res = await fetch('/register', {
+                method: 'POST',
+                body: formData,
+            });
+            console.log('the fetch is done');
+            const data = await res.json();
+            console.log(data);
+            if (data.errors) {
+                
+                firstNameError.textContent = data.errors.firstName;
+                lastNameError.textContent = data.errors.lastName;
+                emailError.textContent = data.errors.email;
+                pictureError.textContent = data.errors.picture;
+                cvError.textContent = data.errors.cv;
+                passwordError.textContent = data.errors.password;
+            }
+
+            if (data.user) {
+                location.assign('/');
+            }
+            } catch (error) {
+                console.log(error);
+            } 
+            if (repeatPasswordValue !== passwordValue) {
+                repeatPasswordError.textContent = `Password doesn't match`;
+            }           
+        });
+    </script>
+</body>

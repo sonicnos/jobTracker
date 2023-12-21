@@ -1,0 +1,43 @@
+<%- include('partials/header') -%>
+
+<section class="display-offer">
+    <div class="container">
+        <h1><%= offer.title %></h1>
+        <div class="about-offer">
+            
+        <p class="bold">Company :</p>
+        <p><%= offer.company %></p>
+        <p class="bold">Website :</p>
+        <p><%= offer.website %></p>
+        </div>
+        
+        <div class="about-contact">
+        <p class="bold">Name :</p>
+        <p><%= offer.contact.name %></p>
+        <p class="bold">Email :</p>
+        <p><%= offer.contact.email %></p>
+        <p class="bold">Phone :</p>
+        <p><%= offer.contact.phone %></p>
+        <p class="bold">Adress :</p>
+        <p class="bold"><%= offer.contact.adress %></p>
+        </div>
+        <p class="bold"><%= offer.origin %></p>
+        <div class="about-status">
+            <p class="bold">Status :</p>
+            <p><%= offer.status %></p>
+            <p class="bold">Comment :</p>
+            <p><%= offer.comment %></p>
+        </div>
+
+        
+
+
+        
+
+
+
+        <p class="btn"><a href="/offer/update/<%= offer._id %>">Edit</a></p>
+        <p class="btn"><a href="/offer/<%= offer._id %>/delete">Delete</a></p>
+    </div>
+
+</section>

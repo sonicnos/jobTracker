@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+
+// CSS Initializer
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: $primary-color;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+
+ul {
+    list-style: none;
+}
+
+li {
+    list-style: none;
+}
+
+.btn{
+    a{
+        text-decoration: none;
+        color: white;
+    }
+    width: 100px;
+    margin: 10px 0;
+    padding: 5px;
+    color: white;
+    font-size: 18px;
+    background-color: $btn-color;
+    cursor: pointer;
+    &:hover{
+        background-color: $btn-color-hover;
+    }
+    &:active{
+        background-color: $btn-color-active;
+    }
+}
+.bold{
+    font-weight: 700;
+}

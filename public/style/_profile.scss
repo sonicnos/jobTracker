@@ -1,0 +1,36 @@
+.profile-section{
+    height: 90vh;
+    position: relative;
+    .container{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+    }
+        
+        .profile{
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+
+        button{
+            font-size: 16px;
+            width: 160px;
+        } 
+        .profile-info{
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            column-gap: 10px;
+        }   
+        }
+    }
+    .profile-picture img{
+        width: 200px;
+        height: 100%;
+    }
